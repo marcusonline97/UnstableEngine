@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\GameEngine\\GameEngineCourse\\UnstableEngine\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{3A8A4979-8465-4568-B074-9D626F6ACB1F}|UnstableEngine.vcxproj|C:\\GameEngine\\GameEngineCourse\\UnstableEngine\\Window\\DarkMode.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3A8A4979-8465-4568-B074-9D626F6ACB1F}|UnstableEngine.vcxproj|solutionrelative:Window\\DarkMode.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{3A8A4979-8465-4568-B074-9D626F6ACB1F}|UnstableEngine.vcxproj|C:\\GameEngine\\GameEngineCourse\\UnstableEngine\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{3A8A4979-8465-4568-B074-9D626F6ACB1F}|UnstableEngine.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -30,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,7 +50,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
+              "Title": "DarkMode.c",
+              "DocumentMoniker": "C:\\GameEngine\\GameEngineCourse\\UnstableEngine\\Window\\DarkMode.c",
+              "RelativeDocumentMoniker": "Window\\DarkMode.c",
+              "ToolTip": "C:\\GameEngine\\GameEngineCourse\\UnstableEngine\\Window\\DarkMode.c",
+              "RelativeToolTip": "Window\\DarkMode.c",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-11-11T21:56:19.874Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "imgui_impl_win32.h",
               "DocumentMoniker": "C:\\GameEngine\\GameEngineCourse\\UnstableEngine\\3rdParty\\includes\\ImGui\\backends\\imgui_impl_win32.h",
               "RelativeDocumentMoniker": "3rdParty\\includes\\ImGui\\backends\\imgui_impl_win32.h",
@@ -54,12 +71,11 @@
               "RelativeToolTip": "3rdParty\\includes\\ImGui\\backends\\imgui_impl_win32.h",
               "ViewState": "AgIAAAwAAAAAAAAAAAAAABMAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-11-11T13:30:28.143Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-11T13:30:28.143Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "glad.h",
               "DocumentMoniker": "C:\\GameEngine\\GameEngineCourse\\UnstableEngine\\3rdParty\\includes\\glad\\glad.h",
               "RelativeDocumentMoniker": "3rdParty\\includes\\glad\\glad.h",
@@ -67,12 +83,11 @@
               "RelativeToolTip": "3rdParty\\includes\\glad\\glad.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-11-11T13:25:29.92Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-11T13:25:29.92Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "glm.hpp",
               "DocumentMoniker": "C:\\GameEngine\\GameEngineCourse\\UnstableEngine\\3rdParty\\includes\\glm\\glm.hpp",
               "RelativeDocumentMoniker": "3rdParty\\includes\\glm\\glm.hpp",
@@ -80,25 +95,24 @@
               "RelativeToolTip": "3rdParty\\includes\\glm\\glm.hpp",
               "ViewState": "AgIAAGMAAAAAAAAAAAAAAGcAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-11-11T12:23:26.571Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-11T12:23:26.571Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "main.cpp",
               "DocumentMoniker": "C:\\GameEngine\\GameEngineCourse\\UnstableEngine\\main.cpp",
               "RelativeDocumentMoniker": "main.cpp",
               "ToolTip": "C:\\GameEngine\\GameEngineCourse\\UnstableEngine\\main.cpp",
               "RelativeToolTip": "main.cpp",
-              "ViewState": "AgIAABUAAAAAAAAAAAAAAB8AAAACAAAAAAAAAA==",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAAAwAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-11-11T12:18:34.595Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Renderable.h",
               "DocumentMoniker": "C:\\GameEngine\\GameEngineCourse\\UnstableEngine\\Renderable.h",
               "RelativeDocumentMoniker": "Renderable.h",

@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include <Windows.h>
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include "glm/glm.hpp"
@@ -7,6 +8,9 @@
 #include "imgui.h"
 #include "backends/imgui_impl_opengl3.h"
 #include "backends/imgui_impl_glfw.h"
+
+//Custom Implementation
+#include "Window/DarkMode.c"
 
 const GLint WIDTH = 800, HEIGHT = 600;
 
@@ -27,7 +31,7 @@ int main()
 
 	//Create Window
 	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Unstable_Engine", NULL, NULL);
-
+	SetGLFWTitleBarDarkMode(window, true);   // Enable dark title bar
 	if (!window)
 	{
 		std::cout << "Failed to create window!" << "\n";
@@ -41,11 +45,47 @@ int main()
 
 	//Set Context 
 	glfwMakeContextCurrent(window);
+	//DarkMode for the window
+	HWND hwnd = GetActiveWindow();
+	SetGLFWTitleBarDarkMode(window, true);   // Enable dark title bar	
+	//Init IMGUI
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	ImGui::StyleColorsDark();
+	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplOpenGL3_Init("#version 330");
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		printf("Failed to initialize GLAD\n");
 		return -1;
 	}
+
+	glViewport(0, 0, bufferWidth, bufferHeight);
+
+	while (!glfwWindowShouldClose(window))
+	{
+		glfwPollEvents();
+
+		glClearColor(0.2f, 0.2f, 0.2f, 0.2f);
+		glClear(GL_COLOR_BUFFER_BIT);
+		//ImGui Starts
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		ImGui::Begin("UE");
+		ImGui::Text("Hello");
+		ImGui::End();
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+
+		glfwSwapBuffers(window);
+	}
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
 
 	std::cout << "Finished Compile" << "\n";
 
