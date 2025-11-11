@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "UnstableEngine\\x64\\Debug\\glm.obj",
+            "outputs": [
+                "UnstableEngine\\x64\\Debug\\glm.cppm.obj.dt.module.json",
+                "UnstableEngine\\x64\\Debug\\glm.cppm.obj.dt.d.json"
+            ],
+            "requires": []
+        }
+    ]
+}
