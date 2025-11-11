@@ -1,0 +1,49 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\GameEngine\\GameEngineCourse\\UnstableEngine\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3A8A4979-8465-4568-B074-9D626F6ACB1F}|UnstableEngine.vcxproj|C:\\GameEngine\\GameEngineCourse\\UnstableEngine\\Renderable.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3A8A4979-8465-4568-B074-9D626F6ACB1F}|UnstableEngine.vcxproj|solutionrelative:Renderable.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Renderable.h",
+              "DocumentMoniker": "C:\\GameEngine\\GameEngineCourse\\UnstableEngine\\Renderable.h",
+              "RelativeDocumentMoniker": "Renderable.h",
+              "ToolTip": "C:\\GameEngine\\GameEngineCourse\\UnstableEngine\\Renderable.h",
+              "RelativeToolTip": "Renderable.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-11-11T09:21:22.038Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
