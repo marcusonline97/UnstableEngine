@@ -954,6 +954,12 @@
     <ClInclude Include="Window\DarkMode.c">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\ueBuildConfig.in.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\PrimitiveShapes\Cube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="3rdParty\libs\glfw3.lib" />
@@ -993,6 +999,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="3rdParty\includes\ImGui\backends\imgui_impl_win32.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\PrimitiveShapes\Cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

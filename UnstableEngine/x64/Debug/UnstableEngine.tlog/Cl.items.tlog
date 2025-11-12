@@ -9,4 +9,5 @@ C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\ImGui\imgui_draw
 C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\ImGui\imgui_tables.cpp;C:\GameEngine\GameEngineCourse\UnstableEngine\UnstableEngine\x64\Debug\imgui_tables.obj
 C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\ImGui\imgui_widgets.cpp;C:\GameEngine\GameEngineCourse\UnstableEngine\UnstableEngine\x64\Debug\imgui_widgets.obj
 C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\ImGui\misc\cpp\imgui_stdlib.cpp;C:\GameEngine\GameEngineCourse\UnstableEngine\UnstableEngine\x64\Debug\imgui_stdlib.obj
+C:\GameEngine\GameEngineCourse\UnstableEngine\Components\PrimitiveShapes\Cube.cpp;C:\GameEngine\GameEngineCourse\UnstableEngine\UnstableEngine\x64\Debug\Cube.obj
 C:\GameEngine\GameEngineCourse\UnstableEngine\main.cpp;C:\GameEngine\GameEngineCourse\UnstableEngine\UnstableEngine\x64\Debug\main.obj

@@ -432,6 +432,8 @@
     <ClInclude Include="3rdParty\includes\ImGui\imstb_truetype.h" />
     <ClInclude Include="3rdParty\includes\ImGui\misc\cpp\imgui_stdlib.h" />
     <ClInclude Include="3rdParty\includes\ImGui\misc\single_file\imgui_single_file.h" />
+    <ClInclude Include="Components\PrimitiveShapes\Cube.h" />
+    <ClInclude Include="Engine\ueBuildConfig.in.h" />
     <ClInclude Include="Window\DarkMode.c" />
     <ClInclude Include="Renderable.h" />
   </ItemGroup>
@@ -450,6 +452,7 @@
     <ClCompile Include="3rdParty\includes\ImGui\imgui_tables.cpp" />
     <ClCompile Include="3rdParty\includes\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="3rdParty\includes\ImGui\misc\cpp\imgui_stdlib.cpp" />
+    <ClCompile Include="Components\PrimitiveShapes\Cube.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
