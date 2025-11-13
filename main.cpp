@@ -97,13 +97,7 @@ int main()
 
 		ImGui::NewFrame();
 
-		// Update rotation using deltaTime
-		if (autoRotate) {
-			angle += rotationSpeed * deltaTime;
-		}
 
-		// Ensure axis is valid
-		if (glm::length(axis) < 1e-6f) axis = glm::vec3(0.0f, 1.0f, 0.0f);
 
 		// Render 3D scene once
 		glViewport(0, 0, bufferWidth, bufferHeight);
@@ -113,45 +107,8 @@ int main()
 		ImGui::Begin("UE Controls");
 		ImGui::Text("Cube Rotation Controls");
 
-		if (ImGui::Button("Rotate Left")) {
-			angle -= 10.0f;
-		}
-		ImGui::SameLine();
-		if (ImGui::Button("Rotate Right")) {
-			angle += 10.0f;
-		}
-
-		ImGui::Checkbox("Auto Rotate", &autoRotate);
-		ImGui::SliderFloat("Rotation Speed (deg/s)", &rotationSpeed, 0.0f, 720.0f);
-		ImGui::InputFloat3("Axis", &axis[0]);
-		if (ImGui::Button("Reset Rotation")) {
-			angle = 0.0f;
-			axis = glm::vec3(0.5f, 1.0f, 0.0f);
-			rotationSpeed = 90.0f;
-			autoRotate = false;
-		}
 		ImGui::Separator();
 		ImGui::End();
-
-		// Setup camera matrices (example)
-		glm::mat4 view = glm::lookAt(glm::vec3(2.0f, 2.0f, 2.0f),
-			glm::vec3(0.0f, 0.0f, 0.0f),
-			glm::vec3(0.0f, 1.0f, 0.0f));
-		glm::mat4 projection = glm::perspective(glm::radians(45.0f),
-			(float)bufferWidth / (float)bufferHeight,
-			0.1f, 100.0f);
-
-
-		// Update rotation if autoRotate is enabled
-		if (autoRotate) {
-			angle += rotationSpeed * deltaTime;
-		}
-
-		// Ensure axis is not zero to avoid undefined rotation
-		if (glm::length(axis) < 1e-6f) axis = glm::vec3(0.0f, 1.0f, 0.0f);
-
-		cube.SetRotation(angle, axis);
-		cube.Render(view, projection);
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
