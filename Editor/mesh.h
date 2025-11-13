@@ -1,7 +1,7 @@
 #pragma once
 
-#include "geometry.h"
-#include "../Rendering/shader.h"
+#include "../Utility/geometry.h"
+#include "Rendering/shader.h"
 
 #include <glad/glad.h> // holds all OpenGL type declarations
 #include <glm/glm.hpp>

@@ -1077,6 +1077,21 @@
     <ClInclude Include="Editor\geometry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Utility\geometry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\cylinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\cubemap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\cube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\disk_border.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="3rdParty\libs\glfw3.lib" />
@@ -1155,6 +1170,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Editor\geometry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\geometry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\cubemap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\opengl_utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

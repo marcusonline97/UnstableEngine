@@ -6,14 +6,14 @@
 #include "Rendering/Renderer.h"
 #include "logger.h"
 
-#include <stb_image.h>
+#include <Stb_image/stb_image.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 #include <imgui.h>
-#include <Iimgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
+#include <ImGui/backends/imgui_impl_glfw.h>
+#include <ImGui/backends/imgui_impl_opengl3.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <mutex>
@@ -67,7 +67,7 @@ UnstableEngine* UnstableEngine::get_instance()
     return instance;
 }
 
-int NeonEngine::setup_glfw() {
+int UnstableEngine::setup_glfw() {
     glfwSetErrorCallback(UserInterface::glfw_error_callback);
     if (!glfwInit())
         return 1;
@@ -96,7 +96,7 @@ int NeonEngine::setup_glfw() {
     return 0;
 }
 
-int NeonEngine::setup_glad() {
+int UnstableEngine::setup_glad() {
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
@@ -104,12 +104,12 @@ int NeonEngine::setup_glad() {
     return 0;
 }
 
-void NeonEngine::clean_gflw() {
+void UnstableEngine::clean_gflw() {
     glfwDestroyWindow(window);
     glfwTerminate();
 }
 
-int NeonEngine::run() {
+int UnstableEngine::run() {
     initialize_all_components();
     if (setup_glfw() != 0) {
         return -1;

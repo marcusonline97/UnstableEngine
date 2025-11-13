@@ -4,7 +4,7 @@
 #include "Rendering/Renderer.h"
 #include "camera.h"
 #include "game_object.h"
-#include "transform3d.h"
+#include "../Utility/transform3d.h"
 #include "user_interface.h"
 
 #include <GLFW/glfw3.h>
@@ -15,7 +15,7 @@ Input* Input::instance = nullptr;
 std::mutex Input::input_mutex;
 
 Input::Input() {
-    uns = nullptr;
+    unstable_engine = nullptr;
     rendering = nullptr;
     last_mouse_pos_selecting = ImVec2(0.0f, 0.0f);
     last_mouse_pos_transforming = ImVec2(0.0f, 0.0f);
