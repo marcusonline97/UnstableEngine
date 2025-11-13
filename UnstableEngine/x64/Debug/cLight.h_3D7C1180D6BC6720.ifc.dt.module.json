@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "UnstableEngine\\x64\\Debug\\cLight.obj",
+            "outputs": [
+                "UnstableEngine\\x64\\Debug\\cLight.h_3D7C1180D6BC6720.ifc.dt.module.json",
+                "UnstableEngine\\x64\\Debug\\cLight.h_3D7C1180D6BC6720.ifc.dt.d.json",
+                "UnstableEngine\\x64\\Debug\\cLight.h.ifc"
+            ],
+            "provides": [
+                {
+                    "logical-name": "C:\\GameEngine\\GameEngineCourse\\UnstableEngine\\Components\\cLight.h",
+                    "source-path": "c:\\gameengine\\gameenginecourse\\unstableengine\\components\\clight.h",
+                    "lookup-method": "absolute"
+                }
+            ],
+            "requires": []
+        }
+    ]
+}
