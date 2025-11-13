@@ -981,6 +981,9 @@
     <ClInclude Include="Engine\Tools\ueCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Editor\ueEditorImGuiWindowInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="3rdParty\libs\glfw3.lib" />

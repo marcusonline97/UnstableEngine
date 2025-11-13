@@ -2,7 +2,7 @@
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
 #include <glm/gtc/quaternion.hpp>
-//#include logger
+#include <plog/Log.h>
 
 ueCamera::ueCamera(ueCameraProjection projection)
 {
@@ -177,6 +177,6 @@ void ueCameraSimpleFPVController::recalculateVectorsFromViewMatrix(const glm::ma
     glm::quat rotation = glm::quat_cast(view);
     yaw = glm::degrees(glm::yaw(rotation));
     pitch = glm::degrees(glm::pitch(rotation));
-    //LOGV << "YAW: " << yaw << ", PITCH: " << pitch;
+    LOGV << "YAW: " << yaw << ", PITCH: " << pitch;
     calculatePerspectiveVectors();
 }

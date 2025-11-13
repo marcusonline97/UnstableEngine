@@ -1,2 +1,8 @@
-﻿  main.cpp
+﻿  ueEditor.cpp
+  ueCamera.cpp
+  main.cpp
+  ueWindowSettings.h
+  WindowInit.cpp
+  Generating Code...
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   UnstableEngine.vcxproj -> C:\GameEngine\GameEngineCourse\UnstableEngine\x64\Debug\UnstableEngine.exe

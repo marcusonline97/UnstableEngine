@@ -434,6 +434,7 @@
     <ClInclude Include="3rdParty\includes\ImGui\misc\single_file\imgui_single_file.h" />
     <ClInclude Include="Components\PrimitiveShapes\Cube.h" />
     <ClInclude Include="Editor\ueEditor.h" />
+    <ClInclude Include="Editor\ueEditorImGuiWindowInterface.h" />
     <ClInclude Include="Engine\Core\ueGame.h" />
     <ClInclude Include="Engine\Core\ueGameEngine.h" />
     <ClInclude Include="Engine\Rendering\Renderable.h" />
