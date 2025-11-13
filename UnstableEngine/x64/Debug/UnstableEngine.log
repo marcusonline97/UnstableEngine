@@ -1,8 +1,68 @@
-﻿  ueEditor.cpp
+﻿  glad.c
+  glm.cpp
+  imgui_impl_glfw.cpp
+  imgui_impl_opengl3.cpp
+  imgui_impl_win32.cpp
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  imgui_stdlib.cpp
+  TracySystem.cpp
+  wiJobSystem.cpp
+  Cube.cpp
+C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\WickedEngine\wiJobSystem.cpp(43,18): error C2039: 'scoped_lock': is not a member of 'std'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\vector(29,1):
+      see declaration of 'std'
+  
+C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\WickedEngine\wiJobSystem.cpp(43,18): error C2065: 'scoped_lock': undeclared identifier
+C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\WickedEngine\wiJobSystem.cpp(43,30): error C2146: syntax error: missing ';' before identifier 'lock'
+C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\WickedEngine\wiJobSystem.cpp(43,30): error C2672: 'lock': no matching overloaded function found
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\mutex(444,6):
+      could be 'void std::lock(_Lock0 &,_Lock1 &,_LockN ...)'
+          C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\WickedEngine\wiJobSystem.cpp(43,30):
+          'void std::lock(_Lock0 &,_Lock1 &,_LockN ...)': expects 3 arguments - 1 provided
+  
+C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\WickedEngine\wiJobSystem.cpp(49,18): error C2039: 'scoped_lock': is not a member of 'std'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\vector(29,1):
+      see declaration of 'std'
+  
+C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\WickedEngine\wiJobSystem.cpp(49,18): error C2065: 'scoped_lock': undeclared identifier
+C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\WickedEngine\wiJobSystem.cpp(49,30): error C2146: syntax error: missing ';' before identifier 'lock'
+C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\WickedEngine\wiJobSystem.cpp(49,30): error C2672: 'lock': no matching overloaded function found
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\mutex(444,6):
+      could be 'void std::lock(_Lock0 &,_Lock1 &,_LockN ...)'
+          C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\WickedEngine\wiJobSystem.cpp(49,30):
+          'void std::lock(_Lock0 &,_Lock1 &,_LockN ...)': expects 3 arguments - 1 provided
+  
+  ueConsoleEditorWindow.cpp
+  ueEditor.cpp
+  ueImGuiExtensions.cpp
   ueCamera.cpp
+  ueGLError.cpp
+  uePath.cpp
+C:\GameEngine\GameEngineCourse\UnstableEngine\Engine\Tools\uePath.h(61,23): warning C4099: 'std::hash<uePath>': type name first seen using 'struct' now seen using 'class'
+  (compiling source file 'Engine/Tools/uePath.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\type_traits(2351,8):
+      see declaration of 'std::hash<uePath>'
+  
+C:\GameEngine\GameEngineCourse\UnstableEngine\Engine\Tools\uePath.h(20,10): error C2065: '_virtualpath': undeclared identifier
+  (compiling source file 'Engine/Tools/uePath.cpp')
+      C:\GameEngine\GameEngineCourse\UnstableEngine\Engine\Tools\uePath.h(18,14):
+      This diagnostic occurred in the compiler generated function 'std::string uePath::save_minimal(const Archive &) const'
+  
+C:\GameEngine\GameEngineCourse\UnstableEngine\Engine\Tools\uePath.h(21,2): error C2760: syntax error: '}' was unexpected here; expected ';'
+  (compiling source file 'Engine/Tools/uePath.cpp')
+      C:\GameEngine\GameEngineCourse\UnstableEngine\Engine\Tools\uePath.h(18,14):
+      This diagnostic occurred in the compiler generated function 'std::string uePath::save_minimal(const Archive &) const'
+  
+C:\GameEngine\GameEngineCourse\UnstableEngine\Engine\Tools\uePath.cpp(39,22): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\GameEngine\GameEngineCourse\UnstableEngine\Engine\Tools\uePath.cpp(48,24): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\GameEngine\GameEngineCourse\UnstableEngine\Engine\Tools\uePath.cpp(57,24): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   main.cpp
+  Generating Code...
+  Compiling...
   ueWindowSettings.h
   WindowInit.cpp
   Generating Code...
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-  UnstableEngine.vcxproj -> C:\GameEngine\GameEngineCourse\UnstableEngine\x64\Debug\UnstableEngine.exe

@@ -5,7 +5,15 @@
 #include <unordered_map>
 
 //Add more libs
+namespace SoLoud
+{
+	class  SoLoud;
+};
 
+namespace jobsystem
+{
+
+}
 
 class ueWindow;
 

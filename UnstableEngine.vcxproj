@@ -102,7 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\3rdParty\includes;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\glm;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\GameEngine\GameEngineCourse\UnstableEngine\Window;C:\GameEngine\GameEngineCourse\UnstableEngine\ueSTL;C:\GameEngine\GameEngineCourse\UnstableEngine\Editor;C:\GameEngine\GameEngineCourse\UnstableEngine\Engine;$(SolutionDir)\3rdParty\includes;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\glm;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -118,7 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\3rdParty\includes;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\glm;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\GameEngine\GameEngineCourse\UnstableEngine\Window;C:\GameEngine\GameEngineCourse\UnstableEngine\ueSTL;C:\GameEngine\GameEngineCourse\UnstableEngine\Editor;C:\GameEngine\GameEngineCourse\UnstableEngine\Engine;$(SolutionDir)\3rdParty\includes;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\glm;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -432,17 +432,37 @@
     <ClInclude Include="3rdParty\includes\ImGui\imstb_truetype.h" />
     <ClInclude Include="3rdParty\includes\ImGui\misc\cpp\imgui_stdlib.h" />
     <ClInclude Include="3rdParty\includes\ImGui\misc\single_file\imgui_single_file.h" />
+    <ClInclude Include="3rdParty\includes\Tracy\client\TracyLock.hpp" />
+    <ClInclude Include="3rdParty\includes\Tracy\client\TracyProfiler.hpp" />
+    <ClInclude Include="3rdParty\includes\Tracy\client\TracyScoped.hpp" />
+    <ClInclude Include="3rdParty\includes\Tracy\common\TracyColor.hpp" />
+    <ClInclude Include="3rdParty\includes\Tracy\common\TracySystem.hpp" />
+    <ClInclude Include="3rdParty\includes\Tracy\tracy\Tracy.hpp" />
+    <ClInclude Include="3rdParty\includes\Tracy\tracy\TracyC.h" />
+    <ClInclude Include="3rdParty\includes\Tracy\tracy\TracyLua.hpp" />
+    <ClInclude Include="3rdParty\includes\Tracy\tracy\TracyOpenCL.hpp" />
+    <ClInclude Include="3rdParty\includes\Tracy\tracy\TracyOpenGL.hpp" />
     <ClInclude Include="Components\PrimitiveShapes\Cube.h" />
+    <ClInclude Include="Editor\ueConsoleEditorWindow.h" />
     <ClInclude Include="Editor\ueEditor.h" />
     <ClInclude Include="Editor\ueEditorImGuiWindowInterface.h" />
+    <ClInclude Include="Editor\ueImGuiExtensions.h" />
+    <ClInclude Include="Editor\ueSceneEditorWindow.h" />
     <ClInclude Include="Engine\Core\ueGame.h" />
     <ClInclude Include="Engine\Core\ueGameEngine.h" />
     <ClInclude Include="Engine\Rendering\Renderable.h" />
     <ClInclude Include="Engine\Rendering\Shader.h" />
+    <ClInclude Include="Engine\Rendering\ueIncludeGL.h" />
     <ClInclude Include="Engine\Tools\ueCamera.h" />
-    <ClInclude Include="Engine\ueBuildConfig.in.h" />
+    <ClInclude Include="Engine\Tools\ueFileIndexer.h" />
+    <ClInclude Include="Engine\Tools\ueGLError.h" />
+    <ClInclude Include="Engine\Tools\uePath.h" />
+    <ClInclude Include="Engine\Tools\uePathDefines.h" />
+    <ClInclude Include="Engine\Core\ueBuildConfig.in.h" />
+    <ClInclude Include="ueSTL\ueString.h" />
     <ClInclude Include="Window\DarkMode.c" />
     <ClInclude Include="Renderable.h" />
+    <ClInclude Include="Window\ueWindow.h" />
     <ClInclude Include="Window\WindowInit.h" />
   </ItemGroup>
   <ItemGroup>
@@ -460,9 +480,14 @@
     <ClCompile Include="3rdParty\includes\ImGui\imgui_tables.cpp" />
     <ClCompile Include="3rdParty\includes\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="3rdParty\includes\ImGui\misc\cpp\imgui_stdlib.cpp" />
+    <ClCompile Include="3rdParty\includes\Tracy\common\TracySystem.cpp" />
     <ClCompile Include="Components\PrimitiveShapes\Cube.cpp" />
+    <ClCompile Include="Editor\ueConsoleEditorWindow.cpp" />
     <ClCompile Include="Editor\ueEditor.cpp" />
+    <ClCompile Include="Editor\ueImGuiExtensions.cpp" />
     <ClCompile Include="Engine\Tools\ueCamera.cpp" />
+    <ClCompile Include="Engine\Tools\ueGLError.cpp" />
+    <ClCompile Include="Engine\Tools\uePath.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Window\ueWindowSettings.h" />
     <ClCompile Include="Window\WindowInit.cpp" />
