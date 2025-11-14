@@ -1,5 +1,3 @@
-#pragma once
-
 #include "../Editor/model.h"
 #include "Rendering/shader.h"
 #include "Unstable_Engine.h"
@@ -15,9 +13,19 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <chrono>
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <filesystem>
+
+// Conversion helpers
+inline glm::vec3 toGlm(const aiVector3D& v) {
+    return glm::vec3(v.x, v.y, v.z);
+}
+
+inline glm::quat toGlm(const aiQuaternion& q) {
+    return glm::quat(q.w, q.x, q.y, q.z);
+}
 
 // constructor, expects a filepath to a 3D model.
 Model::Model(const std::string& name, std::string const& path, bool gamma, bool set_flip_vertically) : gammaCorrection(gamma)
@@ -46,14 +54,15 @@ Model::~Model() {
 // draws the model, and thus all its meshes
 void Model::draw(Shader* shader, Material* draw_material, bool is_selected, bool disable_depth_test, bool render_only_ambient, bool render_one_color)
 {
-    for (unsigned int i = 0; i < meshes.size(); i++) {
+    for (size_t i = 0; i < meshes.size(); ++i) {
         meshes[i].draw(shader, draw_material, is_selected, disable_depth_test, render_only_ambient, render_one_color);
     }
 }
 
 NodeAnimation* Model::find_node_animation(Animation& animation, const std::string& node_name) {
-    if (animation.umap_node_name_to_channels.find(node_name) != animation.umap_node_name_to_channels.end()) {
-        return &(animation.umap_node_name_to_channels[node_name]);
+    auto it = animation.umap_node_name_to_channels.find(node_name);
+    if (it != animation.umap_node_name_to_channels.end()) {
+        return &(it->second);
     }
     return nullptr;
 }
@@ -91,35 +100,24 @@ void Model::update_bones_recursively(float animation_time_in_ticks, Animation& a
         bones[bone_id].final_transformation = global_inverse_transform * global_transformation * bones[bone_id].offset_matrix;
     }
 
-    for (int i = 0; i < node->children.size(); i++) {
+    for (size_t i = 0; i < node->children.size(); ++i) {
         update_bones_recursively(animation_time_in_ticks, animation, node->children[i], global_transformation);
     }
 }
 
 void Model::update_bone_transformations(float animation_time_in_seconds, int animation_id) {
     aiMatrix4x4 identity;
-    assert(animation_id < animations.size());
-    float ticks_per_second = (float)(animations[animation_id].ticks_per_second != 0 ? animations[animation_id].ticks_per_second : 25.0f);
+    assert(animation_id < static_cast<int>(animations.size()));
+    float ticks_per_second = static_cast<float>(animations[animation_id].ticks_per_second != 0 ? animations[animation_id].ticks_per_second : 25.0f);
     float animation_time_in_ticks = animation_time_in_seconds * ticks_per_second;
-    animation_time_in_ticks = fmod(animation_time_in_ticks, (float)animations[animation_id].duration);
+    animation_time_in_ticks = fmod(animation_time_in_ticks, static_cast<float>(animations[animation_id].duration));
 
     update_bones_recursively(animation_time_in_ticks, animations[animation_id], root_node, identity);
 }
 
-/*
-void Model::update_bone_transformations_blended(float animation_time_in_seconds, int animation_id1, int animation_id2, float blend_factor) {
-    aiMatrix4x4 identity;
-    assert(animation_id < animations.size());
-    float ticks_per_second = (float)(animations[animation_id].ticks_per_second != 0 ? animations[animation_id].ticks_per_second : 25.0f);
-    float animation_time_in_ticks = animation_time_in_seconds * ticks_per_second;
-    animation_time_in_ticks = fmod(animation_time_in_ticks, (float)animations[animation_id].duration);
-
-    update_bones_recursively(animation_time_in_ticks, animations[animation_id], root_node, identity);
-}*/
-
 // For translations and scalings
 void Model::calculate_interpolated_transformation(aiVector3D& transformation, float animation_time_in_ticks, std::map<double, aiVector3D>& map_time_to_transform) {
-    // When there is only one key or when we the current animation time is less than first key's time
+    // When there is only one key or when the current animation time is less than first key's time
     if (map_time_to_transform.size() == 1 || animation_time_in_ticks < map_time_to_transform.begin()->first) {
         transformation = map_time_to_transform.begin()->second;
         return;
@@ -133,14 +131,14 @@ void Model::calculate_interpolated_transformation(aiVector3D& transformation, fl
     // Find 2 closest keys to the current animation time in O(log(n))
     auto it_next_transformation = map_time_to_transform.upper_bound(animation_time_in_ticks);
     if (it_next_transformation == map_time_to_transform.end()) {
-        it_next_transformation--;
+        --it_next_transformation;
     }
     auto it_transformation = it_next_transformation;
-    it_transformation--;
+    --it_transformation;
 
     // Interpolate the 2 closest transformations found
-    float t1 = (float)it_transformation->first;
-    float t2 = (float)it_next_transformation->first;
+    float t1 = static_cast<float>(it_transformation->first);
+    float t2 = static_cast<float>(it_next_transformation->first);
     float delta_time = t2 - t1;
     float factor = (animation_time_in_ticks - t1) / delta_time;
     assert(factor >= 0.0f && factor <= 1.0f);
@@ -152,7 +150,7 @@ void Model::calculate_interpolated_transformation(aiVector3D& transformation, fl
 
 // For rotations
 void Model::calculate_interpolated_transformation(aiQuaternion& transformation, float animation_time_in_ticks, std::map<double, aiQuaternion>& map_time_to_transform) {
-    // When there is only one key or when we the current animation time is less than first key's time
+    // When there is only one key or when the current animation time is less than first key's time
     if (map_time_to_transform.size() == 1 || animation_time_in_ticks < map_time_to_transform.begin()->first) {
         transformation = map_time_to_transform.begin()->second;
         return;
@@ -166,14 +164,14 @@ void Model::calculate_interpolated_transformation(aiQuaternion& transformation, 
     // Find 2 closest keys to the current animation time in O(log(n))
     auto it_next_transformation = map_time_to_transform.upper_bound(animation_time_in_ticks);
     if (it_next_transformation == map_time_to_transform.end()) {
-        it_next_transformation--;
+        --it_next_transformation;
     }
     auto it_transformation = it_next_transformation;
-    it_transformation--;
+    --it_transformation;
 
     // Interpolate the 2 closest transformations found
-    float t1 = (float)it_transformation->first;
-    float t2 = (float)it_next_transformation->first;
+    float t1 = static_cast<float>(it_transformation->first);
+    float t2 = static_cast<float>(it_next_transformation->first);
     float delta_time = t2 - t1;
     float factor = (animation_time_in_ticks - t1) / delta_time;
     assert(factor >= 0.0f && factor <= 1.0f);
@@ -184,7 +182,7 @@ void Model::calculate_interpolated_transformation(aiQuaternion& transformation, 
 }
 
 bool Model::intersected_ray(const glm::vec3& orig, const glm::vec3& dir, float& t) {
-    for (unsigned int i = 0; i < meshes.size(); i++) {
+    for (size_t i = 0; i < meshes.size(); ++i) {
         if (meshes[i].intersected_ray(orig, dir, t)) {
             return true;
         }
@@ -213,35 +211,32 @@ void Model::loadModel(std::string const& path) {
     this->global_inverse_transform = this->global_inverse_transform.Inverse();
 
     // We process each node, starting at the root node, and recurse downwards
-    // Inside the processing of each node, we process all of the meshes of the current node
-    // Inside the processing of each mesh, we process all the vertices of the mesh, the material of the mesh
-    // and the bone data related to this mesh.
     root_node = new ModelNode();
     processNode(scene->mRootNode, scene, root_node);
 
     // Process animations and store them in our own data structure
-    for (int i = 0; i < scene->mNumAnimations; i++) {
+    for (unsigned int i = 0; i < scene->mNumAnimations; ++i) {
         aiAnimation* assimp_animation = scene->mAnimations[i];
         Animation animation;
         animation.name = assimp_animation->mName.C_Str();
         animation.ticks_per_second = assimp_animation->mTicksPerSecond;
         animation.duration = assimp_animation->mDuration;
-        for (int j = 0; j < assimp_animation->mNumChannels; j++) {
+        for (unsigned int j = 0; j < assimp_animation->mNumChannels; ++j) {
             aiNodeAnim* node_anim = assimp_animation->mChannels[j];
             NodeAnimation node_animation;
-            for (int k = 0; k < node_anim->mNumPositionKeys; k++) {
+            for (unsigned int k = 0; k < node_anim->mNumPositionKeys; ++k) {
                 node_animation.map_time_to_position[node_anim->mPositionKeys[k].mTime] = node_anim->mPositionKeys[k].mValue;
             }
-            for (int k = 0; k < node_anim->mNumRotationKeys; k++) {
+            for (unsigned int k = 0; k < node_anim->mNumRotationKeys; ++k) {
                 node_animation.map_time_to_rotation[node_anim->mRotationKeys[k].mTime] = node_anim->mRotationKeys[k].mValue;
             }
-            for (int k = 0; k < node_anim->mNumScalingKeys; k++) {
+            for (unsigned int k = 0; k < node_anim->mNumScalingKeys; ++k) {
                 node_animation.map_time_to_scaling[node_anim->mScalingKeys[k].mTime] = node_anim->mScalingKeys[k].mValue;
             }
             std::string node_name = std::string(node_anim->mNodeName.data);
-            animation.umap_node_name_to_channels[node_name] = node_animation;
+            animation.umap_node_name_to_channels[node_name] = std::move(node_animation);
         }
-        animations.push_back(animation);
+        animations.push_back(std::move(animation));
     }
 }
 
@@ -251,15 +246,14 @@ void Model::processNode(aiNode* node, const aiScene* scene, ModelNode* model_nod
     model_node->name = std::string(node->mName.data);
     model_node->transformation = node->mTransformation;
     // process each mesh located at the current node
-    for (unsigned int i = 0; i < node->mNumMeshes; i++)
+    for (unsigned int i = 0; i < node->mNumMeshes; ++i)
     {
         // the node object only contains indices to index the actual objects in the scene. 
-        // the scene contains all the data, node is just to keep stuff organized (like relations between nodes).
         aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
         meshes.push_back(processMesh(mesh, scene));
     }
     // after we've processed all of the meshes (if any) we then recursively process each of the children nodes
-    for (unsigned int i = 0; i < node->mNumChildren; i++)
+    for (unsigned int i = 0; i < node->mNumChildren; ++i)
     {
         ModelNode* child = new ModelNode();
         processNode(node->mChildren[i], scene, child);
@@ -274,10 +268,10 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
     std::vector<unsigned int> indices;
 
     // walk through each of the mesh's vertices
-    for (unsigned int i = 0; i < mesh->mNumVertices; i++)
+    for (unsigned int i = 0; i < mesh->mNumVertices; ++i)
     {
         Vertex vertex;
-        glm::vec3 vector; // we declare a placeholder vector since assimp uses its own vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
+        glm::vec3 vector; // placeholder for assimp -> glm conversion
         // positions
         vector.x = mesh->mVertices[i].x;
         vector.y = mesh->mVertices[i].y;
@@ -295,8 +289,6 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
         if (mesh->mTextureCoords[0]) // does the mesh contain texture coordinates?
         {
             glm::vec2 vec;
-            // a vertex can contain up to 8 different texture coordinates. We thus make the assumption that we won't 
-            // use models where a vertex can have multiple texture coordinates so we always take the first set (0).
             vec.x = mesh->mTextureCoords[0][i].x;
             vec.y = mesh->mTextureCoords[0][i].y;
             vertex.TexCoords = vec;
@@ -316,12 +308,11 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 
         vertices.push_back(vertex);
     }
-    // now walk through each of the mesh's faces (a face is a mesh its triangle) and retrieve the corresponding vertex indices.
-    for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+    // now walk through each of the mesh's faces and retrieve the corresponding vertex indices.
+    for (unsigned int i = 0; i < mesh->mNumFaces; ++i)
     {
         aiFace face = mesh->mFaces[i];
-        // retrieve all indices of the face and store them in the indices vector
-        for (unsigned int j = 0; j < face.mNumIndices; j++)
+        for (unsigned int j = 0; j < face.mNumIndices; ++j)
             indices.push_back(face.mIndices[j]);
     }
 
@@ -361,25 +352,25 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
         // Create material of the mesh
         material = new Material(material_name);
         material->format = this->format;
-        if (albedoMaps.size() != 0) {
+        if (!albedoMaps.empty()) {
             material->textures[TexAlbedo] = albedoMaps[0];
         }
-        if (normalMaps.size() != 0) {
+        if (!normalMaps.empty()) {
             material->textures[TexNormal] = normalMaps[0];
         }
-        if (metalnessMaps.size() != 0) {
+        if (!metalnessMaps.empty()) {
             material->textures[TexMetalness] = metalnessMaps[0];
         }
-        if (roughnessMaps.size() != 0) {
+        if (!roughnessMaps.empty()) {
             material->textures[TexRoughness] = roughnessMaps[0];
         }
-        if (emissionMaps.size() != 0) {
+        if (!emissionMaps.empty()) {
             material->textures[TexEmission] = emissionMaps[0];
         }
-        if (ambientOcclusionMaps.size() != 0) {
+        if (!ambientOcclusionMaps.empty()) {
             material->textures[TexAmbientOcclusion] = ambientOcclusionMaps[0];
         }
-        if (specularMaps.size() != 0) {
+        if (!specularMaps.empty()) {
             material->textures[TexSpecular] = specularMaps[0];
         }
         loaded_materials[mesh->mMaterialIndex] = material;
@@ -389,11 +380,11 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
     }
 
     // Process bones
-    for (int i = 0; i < mesh->mNumBones; i++) {
+    for (unsigned int i = 0; i < mesh->mNumBones; ++i) {
         int bone_id = 0;
         std::string bone_name(mesh->mBones[i]->mName.data);
         if (umap_bone_name_to_id.find(bone_name) == umap_bone_name_to_id.end()) {
-            bone_id = umap_bone_name_to_id.size();
+            bone_id = static_cast<int>(umap_bone_name_to_id.size());
             umap_bone_name_to_id[bone_name] = bone_id;
             Bone bone;
             bone.offset_matrix = mesh->mBones[i]->mOffsetMatrix;
@@ -403,7 +394,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
             bone_id = umap_bone_name_to_id[bone_name];
         }
 
-        for (int j = 0; j < mesh->mBones[i]->mNumWeights; j++) {
+        for (unsigned int j = 0; j < mesh->mBones[i]->mNumWeights; ++j) {
             unsigned int vertex_id = mesh->mBones[i]->mWeights[j].mVertexId;
             float weight = mesh->mBones[i]->mWeights[j].mWeight;
 
@@ -412,7 +403,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
             }
 
             bool added_bone_weight = false;
-            for (int k = 0; k < MAX_BONE_INFLUENCE && !added_bone_weight; k++) {
+            for (int k = 0; k < MAX_BONE_INFLUENCE && !added_bone_weight; ++k) {
                 if (vertices[vertex_id].BoneIds[k] == bone_id && vertices[vertex_id].BoneWeights[k] != 0.0f) {
                     added_bone_weight = true;
                 }
@@ -424,7 +415,6 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
             }
             if (!added_bone_weight) {
                 std::cout << "ERROR: NOT ENOUGH SPACE TO ADD BONE WEIGHT, INCREASE VARIABLE: MAX_BONE_INFLUENCE" << std::endl;
-                //assert(0);
             }
         }
     }
@@ -445,11 +435,11 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 }
 
 void Model::print_loaded_textures(const std::map<std::string, Texture*>& loaded_textures) {
-    for (auto it = loaded_textures.begin(); it != loaded_textures.end(); it++) {
+    for (auto it = loaded_textures.begin(); it != loaded_textures.end(); ++it) {
         Texture* texture = it->second;
         std::cout << "Texture loaded at path: " << texture->path << ", with " << texture->num_channels << " channels, of types: ";
-        for (auto it = texture->types.begin(); it != texture->types.end(); it++) {
-            std::cout << Texture::get_long_name_of_texture_type(*it) << ", ";
+        for (auto tit = texture->types.begin(); tit != texture->types.end(); ++tit) {
+            std::cout << Texture::get_long_name_of_texture_type(*tit) << ", ";
         }
         std::cout << std::endl;
     }
@@ -460,7 +450,7 @@ void Model::print_loaded_textures(const std::map<std::string, Texture*>& loaded_
 std::vector<Texture*> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, TextureType texture_type, const aiScene* scene, const std::string& material_name)
 {
     std::vector<Texture*> textures;
-    for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
+    for (unsigned int i = 0; i < mat->GetTextureCount(type); ++i)
     {
         aiString str;
         mat->GetTexture(type, i, &str);
@@ -483,7 +473,7 @@ std::vector<Texture*> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType
             texture->types.insert(texture_type);
             texture->path = str.C_Str();
             textures.push_back(texture);
-            loaded_textures[std::string(str.C_Str())] = texture;  // store it as texture loaded for entire model, to ensure we won't unnecessary load duplicate textures.
+            loaded_textures[std::string(str.C_Str())] = texture;  // store it as texture loaded for entire model
         }
     }
     return textures;
@@ -491,7 +481,9 @@ std::vector<Texture*> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType
 
 FileFormat get_format_from_path(const std::string& path) {
     std::string file_extension = std::filesystem::path(path).extension().string();
-    file_extension = file_extension.substr(1);
+    if (!file_extension.empty() && file_extension.front() == '.') {
+        file_extension = file_extension.substr(1);
+    }
     if (file_extension == "gltf" || file_extension == "glb") {
         return glTF;
     }
@@ -587,4 +579,5 @@ unsigned int TextureFromFile(const char* path, const std::string& directory, int
     }
 
     return textureID;
-}
+
+};

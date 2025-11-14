@@ -56,7 +56,7 @@ void Input::process_viewport_input() {
     //ImVec2 current_mouse_pos = ImGui::GetMousePos();
     double current_mouse_pos_x, current_mouse_pos_y;
     glfwGetCursorPos(unstable_engine->window, &current_mouse_pos_x, &current_mouse_pos_y);
-    ImVec2 current_mouse_pos(current_mouse_pos_x, current_mouse_pos_y);
+    ImVec2 current_mouse_pos((float)current_mouse_pos_x, (float)current_mouse_pos_y);
     ImVec2 imgui_mouse_pos = ImGui::GetIO().MousePos;
 
     if (transforming_selected_object) {
@@ -177,16 +177,16 @@ void Input::mouse_rotate_camera() {
     glfwGetCursorPos(unstable_engine->window, &mouse_pos_x, &mouse_pos_y);
     if (firstMouse)
     {
-        lastX = mouse_pos_x;
-        lastY = mouse_pos_y;
+        lastX = (float)mouse_pos_x;
+        lastY = (float)mouse_pos_y;
         firstMouse = false;
     }
 
-    float xoffset = mouse_pos_x - lastX;
-    float yoffset = lastY - mouse_pos_y; // reversed since y-coordinates go from bottom to top
+    float xoffset = (float)(mouse_pos_x - lastX);
+    float yoffset = (float)(lastY - mouse_pos_y); // reversed since y-coordinates go from bottom to top
 
-    lastX = mouse_pos_x;
-    lastY = mouse_pos_y;
+    lastX = (float)mouse_pos_x;
+    lastY = (float)mouse_pos_y;
 
     camera_viewport->ProcessMouseMovement(xoffset, yoffset);
 }

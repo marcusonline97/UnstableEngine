@@ -154,7 +154,7 @@ public:
                 }
             }
         }
-        std::random_device rd;
+        //std::random_device rd;
         //std::mt19937 g(rd());
         std::mt19937 g(0);
         std::shuffle(available_colors.begin(), available_colors.end(), g);

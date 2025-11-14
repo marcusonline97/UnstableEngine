@@ -22,4 +22,4 @@ unsigned int load_hdr_texture(char const* path);
 unsigned int load_hdr_file_to_cubemap(const std::vector<std::string>& paths_to_mipmap_files, int base_width, int base_height);
 void save_texture_to_png_file(unsigned int texture_id, int num_channels, int width, int height, const std::string& path_to_file);
 void save_texture_to_hdr_file(unsigned int texture_id, int num_channels, int width, int height, const std::string& path_to_file);
-void save_cubemap_to_hdr_file(unsigned int cubemap_texture_id, int num_channels, const std::vector<int>& widths, const std::vector<int>& heights, const std::vector<std::string>& paths_to_mipmap_files); #pragma once
+void save_cubemap_to_hdr_file(unsigned int cubemap_texture_id, int num_channels, const std::vector<int>& widths, const std::vector<int>& heights, const std::vector<std::string>& paths_to_mipmap_files);

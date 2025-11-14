@@ -1,5 +1,6 @@
 #pragma once
 
+#include <ImGui/imgui.h>
 #include <glm/glm.hpp>
 
 #define IM_VEC4_CLASS_EXTRA \

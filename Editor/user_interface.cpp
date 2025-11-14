@@ -6,7 +6,8 @@
 #include "game_object.h"
 #include "model.h"
 #include "logger.h"
-#include "cubemap.h"
+#include "../Component/cubemap.h"
+#include "../Utility/imgui_helper.h"
 
 #include <imgui.h>
 #include <ImGui/backends/imgui_impl_glfw.h>
@@ -17,6 +18,9 @@
 #include <mutex>
 #include <iostream>
 #include <cstring>
+#include <gtx/transform.hpp>
+#include <cstdint> // added for intptr_t used when casting texture id to ImTextureID
+
 
 UserInterface* UserInterface::instance = nullptr;
 std::mutex UserInterface::user_interface_mutex;
@@ -78,17 +82,17 @@ void UserInterface::set_ui_style() {
     io.Fonts->AddFontFromFileTTF("fonts/Ubuntu-Regular.ttf", 30.0f);
 
     ImVec4 dark_purple = ImVec4(70.0f / 255.0f * 0.65f, 36.0f / 255.0f * 0.65f, 90.0f / 255.0f * 0.65f, 1.0f);
-    ImVec4 very_dark_purple = (glm::vec4)dark_purple * 0.2f; very_dark_purple.w = 1.0f;
-    ImVec4 purple = (glm::vec4)dark_purple * 2.0f; purple.w = 1.0f;
-    ImVec4 light_purple = (glm::vec4)dark_purple * 3.0f; light_purple.w = 1.0f;
+    ImVec4 very_dark_purple = scale(dark_purple, 0.2f); very_dark_purple.w = 1.0f;
+    ImVec4 purple = scale(dark_purple, 2.0f); purple.w = 1.0f;
+    ImVec4 light_purple = scale(dark_purple, 3.0f); light_purple.w = 1.0f;
     ImVec4 white = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
-    ImVec4 dark_white = (glm::vec4)white * 0.8f; dark_white.w = 1.0f;
+    ImVec4 dark_white = scale(white, 0.8f); dark_white.w = 1.0f;
     ImVec4 light_cyan = ImVec4(16.0f / 255.0f * 0.8f, 186.0f / 255.0f * 0.8f, 233.0f / 255.0f * 0.8f, 1.0f);
-    ImVec4 cyan = (glm::vec4)light_cyan * 0.8f; cyan.w = 1.0f;
-    ImVec4 dark_cyan = (glm::vec4)light_cyan * 0.5f; dark_cyan.w = 0.5f;
+    ImVec4 cyan = scale(light_cyan, 0.8f); cyan.w = 1.0f;
+    ImVec4 dark_cyan = scale(light_cyan, 0.5f); dark_cyan.w = 0.5f;
     ImVec4 light_yellow = ImVec4(200.0f / 255.0f, 165.0f / 255.0f, 30.0f / 255.0f, 1.0f);
-    ImVec4 yellow = (glm::vec4)light_yellow * 0.8f; yellow.w = 1.0f;
-    ImVec4 dark_yellow = (glm::vec4)light_yellow * 0.6f; dark_yellow.w = 1.0f;
+    ImVec4 yellow = scale(light_yellow, 0.8f); yellow.w = 1.0f;
+    ImVec4 dark_yellow = scale(light_yellow, 0.6f); dark_yellow.w = 1.0f;
     ImVec4 red = ImVec4(233.0f / 255.0f, 16.0f / 255.0f, 96.0f / 255.0f, 1.0f);
 
     ImVec4* colors = ImGui::GetStyle().Colors;
@@ -140,21 +144,21 @@ void UserInterface::setup_imgui() {
     set_ui_style();
 
     // Setup Platform/Renderer backends
-    ImGui_ImplGlfw_InitForOpenGL(neon_engine->window, true);
-    ImGui_ImplOpenGL3_Init(neon_engine->glsl_version);
+    ImGui_ImplGlfw_InitForOpenGL(unstable_engine->window, true);
+    ImGui_ImplOpenGL3_Init(unstable_engine->glsl_version);
 }
 
 void UserInterface::update_fps_ui() {
-    passed_time_seconds += neon_engine->delta_time_seconds;
+    passed_time_seconds += unstable_engine->delta_time_seconds;
     if (passed_time_seconds >= 1.0f) {
-        frames_per_second_ui = neon_engine->frames_per_second;
+        frames_per_second_ui = unstable_engine->frames_per_second;
         passed_time_seconds = 0.0f;
     }
 }
 
 void UserInterface::check_if_viewport_window_resized() {
-    int new_window_viewport_width = ImGui::GetWindowWidth();
-    int new_window_viewport_height = ImGui::GetWindowHeight();
+    int new_window_viewport_width = static_cast<int>(ImGui::GetWindowWidth());
+    int new_window_viewport_height = static_cast<int>(ImGui::GetWindowHeight());
     if (new_window_viewport_width != window_viewport_width || new_window_viewport_height != window_viewport_height) {
         window_viewport_width = new_window_viewport_width;
         window_viewport_height = new_window_viewport_height;
@@ -286,8 +290,7 @@ void UserInterface::render_app() {
     ImVec2 pos2(pos1.x + texture_viewport_width, pos1.y + texture_viewport_height);
 
     viewport_texture_pos = ImGui::GetCursorPos();
-    ImGui::GetWindowDrawList()->AddImage((void*)rendered_texture, pos1, pos2, ImVec2(0, 1), ImVec2(1, 0));
-
+    ImGui::GetWindowDrawList()->AddImage((ImTextureID)(intptr_t)rendered_texture, pos1, pos2, ImVec2(0, 1), ImVec2(1, 0));
     input->process_viewport_input();
 
     ImGui::End();
@@ -495,10 +498,10 @@ void UserInterface::show_game_object_ui(GameObject* game_object) {
                     glm::vec3 euler_rotation = glm::degrees(glm::eulerAngles(game_object->rotation));
                     ImGui::DragFloat3("##Rotation", &(euler_rotation.x), 0.5f, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max());
                     if (euler_rotation.y >= 90.0f) {
-                        euler_rotation.y = 89.999;
+                        euler_rotation.y = 89.999f;
                     }
                     else if (euler_rotation.y <= -90.0f) {
-                        euler_rotation.y = -89.999;
+                        euler_rotation.y = -89.999f;
                     }
                     if (ImGui::IsItemEdited()) {
                         game_object->rotation = glm::quat(glm::radians(euler_rotation));
@@ -720,7 +723,7 @@ void UserInterface::show_game_object_ui(GameObject* game_object) {
                             ImGui::Text("Attenuation Quadratic Term");
 
                             ImGui::TableSetColumnIndex(1);
-                            ImGui::DragFloat("##AttenuationQuadraticTerm", &(point_light->quadratic), 0.001, 0.0f, std::numeric_limits<float>::max());
+                            ImGui::DragFloat("##AttenuationQuadraticTerm", &(point_light->quadratic), 0.001f, 0.0f, std::numeric_limits<float>::max());
                         }
                         // If it is a spot light
                         else if (game_object->type == TypeSpotLight) {

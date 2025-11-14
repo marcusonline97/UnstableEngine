@@ -99,16 +99,19 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <ObjectFileName>$(IntDir)%(RelativeDir)%(Filename).obj</ObjectFileName>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\GameEngine\GameEngineCourse\UnstableEngine\Window;C:\GameEngine\GameEngineCourse\UnstableEngine\ueSTL;C:\GameEngine\GameEngineCourse\UnstableEngine\Editor;C:\GameEngine\GameEngineCourse\UnstableEngine\Engine;$(SolutionDir)\3rdParty\includes;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\glm;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\assimp;C:\GameEngine\GameEngineCourse\UnstableEngine\Window;C:\GameEngine\GameEngineCourse\UnstableEngine\ueSTL;C:\GameEngine\GameEngineCourse\UnstableEngine\Editor;C:\GameEngine\GameEngineCourse\UnstableEngine\Engine;$(SolutionDir)\3rdParty\includes;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\glm;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\ImGui;$(SolutionDir)\3rdParty\includes\assimp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -119,16 +122,18 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\GameEngine\GameEngineCourse\UnstableEngine\Window;C:\GameEngine\GameEngineCourse\UnstableEngine\ueSTL;C:\GameEngine\GameEngineCourse\UnstableEngine\Editor;C:\GameEngine\GameEngineCourse\UnstableEngine\Engine;$(SolutionDir)\3rdParty\includes;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\glm;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\assimp;C:\GameEngine\GameEngineCourse\UnstableEngine\Window;C:\GameEngine\GameEngineCourse\UnstableEngine\ueSTL;C:\GameEngine\GameEngineCourse\UnstableEngine\Editor;C:\GameEngine\GameEngineCourse\UnstableEngine\Engine;$(SolutionDir)\3rdParty\includes;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\glm;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\ImGui;$(SolutionDir)\3rdParty\includes\assimp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="3rdParty\includes\assimp\config.h" />
     <ClInclude Include="3rdParty\includes\EA_STL\EASTL\algorithm.h" />
     <ClInclude Include="3rdParty\includes\EA_STL\EASTL\allocator.h" />
     <ClInclude Include="3rdParty\includes\EA_STL\EASTL\bonus\compressed_pair.h" />
@@ -460,6 +465,8 @@
     <ClInclude Include="Component\cube.h" />
     <ClInclude Include="Component\cubemap.h" />
     <ClInclude Include="Component\cylinder.h" />
+    <ClInclude Include="Component\quad.h" />
+    <ClInclude Include="Component\sphere.h" />
     <ClInclude Include="Editor\base_model.h" />
     <ClInclude Include="Editor\camera.h" />
     <ClInclude Include="Editor\disk_border.h" />
@@ -471,13 +478,14 @@
     <ClInclude Include="Editor\user_interface.h" />
     <ClInclude Include="Utility\geometry.h" />
     <ClInclude Include="Utility\imgui_extension.h" />
-    <ClInclude Include="Utility\opengl_utils.h" />
+    <ClInclude Include="Utility\imgui_helper.h" />
     <ClInclude Include="Utility\transform3d.h" />
     <ClInclude Include="Window\DarkMode.c" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="Window\Input.h" />
-    <ClInclude Include="Window\opengl_utils.h" />
+    <ClInclude Include="Utility\opengl_utils.h" />
     <ClInclude Include="Window\Rendering\bloom.h" />
+    <ClInclude Include="Window\Rendering\pbr.h" />
     <ClInclude Include="Window\Rendering\Renderer.h" />
     <ClInclude Include="Window\Rendering\shader.h" />
     <ClInclude Include="Window\Unstable_Engine.h" />
@@ -500,8 +508,9 @@
     <ClCompile Include="3rdParty\includes\ImGui\misc\cpp\imgui_stdlib.cpp" />
     <ClCompile Include="3rdParty\includes\Tracy\common\TracySystem.cpp" />
     <ClCompile Include="Component\cubemap.cpp" />
+    <ClCompile Include="Component\cylinder.cpp" />
+    <ClCompile Include="Component\sphere.cpp" />
     <ClCompile Include="Editor\game_object.cpp" />
-    <ClCompile Include="Editor\geometry.cpp" />
     <ClCompile Include="Editor\model.cpp" />
     <ClCompile Include="Editor\user_interface.cpp" />
     <ClCompile Include="Utility\geometry.cpp" />
@@ -509,7 +518,6 @@
     <ClCompile Include="Utility\stb_image.cpp" />
     <ClCompile Include="Window\Input.cpp" />
     <ClCompile Include="Window\main.cpp" />
-    <ClCompile Include="Window\opengl_utils.cpp" />
     <ClCompile Include="Window\Rendering\bloom.cpp" />
     <ClCompile Include="Window\Rendering\renderer.cpp" />
     <ClCompile Include="Window\Rendering\shader.cpp" />

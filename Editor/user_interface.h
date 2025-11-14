@@ -6,7 +6,7 @@
 #include <imgui.h>
 #include <mutex>
 
-class NeonEngine;
+class UnstableEngine;
 class Input;
 class Rendering;
 class GameObject;

@@ -3,7 +3,7 @@
 #include "glm/glm.hpp"
 
 bool ray_triangle_intersection(const glm::vec3& orig, const glm::vec3& dir, const glm::vec3& v0, const glm::vec3& v1, const glm::vec3& v2, float& t) {
-    const float kEpsilon = 0.0000001;
+    const float kEpsilon = 0.0000001f;
 
     // compute the plane's normal
     glm::vec3 v0v1 = v1 - v0;

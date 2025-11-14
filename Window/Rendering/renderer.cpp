@@ -5,16 +5,16 @@
 #include "model.h"
 #include "user_interface.h"
 #include "Unstable_Engine.h"
-#include "cylinder.h"
+#include "../Component/cylinder.h"
 #include "game_object.h"
 #include "../Utility/opengl_utils.h"
-#include "transform3d.h"
-#include "quad.h"
-#include "cube.h"
-#include "sphere.h"
+#include "../Utility/transform3d.h"
+#include "../Component/quad.h"
+#include "../Component/cube.h"
+#include "../Component/sphere.h"
 #include "disk_border.h"
-#include "cubemap.h"
-#include "pbr.h"
+#include "../Component/cubemap.h"
+#include "../Window/Rendering/pbr.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -261,14 +261,17 @@ void Rendering::resize_textures() {
     glBindRenderbuffer(GL_RENDERBUFFER, rboDepthStencil);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, texture_viewport_width, texture_viewport_height);
 
-    // Resize bloom textures
-    glm::vec2 texture_size(texture_viewport_width, texture_viewport_height);
-    for (int i = 0; i < bloom_textures.size(); i++) {
+    // Resize bloom textures: operate in floats then cast to GLsizei (ensure >=1)
+    glm::vec2 texture_size(static_cast<float>(texture_viewport_width), static_cast<float>(texture_viewport_height));
+    for (size_t i = 0; i < bloom_textures.size(); ++i) {
         texture_size /= 2.0f;
         bloom_textures[i].size = texture_size;
 
+        GLsizei w = static_cast<GLsizei>(std::max(1.0f, texture_size.x));
+        GLsizei h = static_cast<GLsizei>(std::max(1.0f, texture_size.y));
+
         glBindTexture(GL_TEXTURE_2D, bloom_textures[i].texture_id);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, texture_size.x, texture_size.y, 0, GL_RGBA, GL_FLOAT, nullptr);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, w, h, 0, GL_RGBA, GL_FLOAT, nullptr);
     }
 }
 
@@ -880,7 +883,7 @@ void Rendering::render_viewport() {
         GameObject* game_object = it->second;
         if (game_object->type != TypeSkybox) {
             if (game_object->type == TypeBaseModel) {
-                lighting_shader->setFloat("intensity", 1.0);
+                lighting_shader->setFloat("intensity", 1.0f);
             }
             else { // It is a light
                 lighting_shader->setFloat("intensity", ((Light*)game_object)->intensity);

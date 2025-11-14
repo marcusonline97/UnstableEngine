@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Editor/base_model.h"
-#include "shader.h"
+#include "../Window/Rendering/shader.h"
 
 #include <vector>
 #include <glad/glad.h>
@@ -132,7 +132,7 @@ public:
 
         // draw mesh
         glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(indices.size()), GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
 
         // always good practice to set everything back to defaults once configured.

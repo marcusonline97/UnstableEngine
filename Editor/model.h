@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "mesh.h"
@@ -6,7 +7,10 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include <glm/gtc/quaternion.hpp>
+
 #include <string>
+#include <map>
 #include <unordered_map>
 
 FileFormat get_format_from_path(const std::string& path);
@@ -19,18 +23,19 @@ struct ModelNode {
     std::vector<ModelNode*> children;
 
     ~ModelNode() {
-        for (int i = 0; i < children.size(); i++) {
+        for (int i = 0; i < (int)children.size(); i++) {
             delete children[i];
         }
     }
 };
 
+// Use Assimp types here (consistent with model.cpp)
 struct NodeAnimation {
     std::map<double, aiVector3D> map_time_to_position;
     std::map<double, aiQuaternion> map_time_to_rotation;
     std::map<double, aiVector3D> map_time_to_scaling;
 };
-
+    
 struct Animation {
     std::string name;
     double ticks_per_second;
@@ -42,7 +47,7 @@ class Model : public BaseModel
 {
 public:
     // Model data 
-    std::map<std::string, Texture*> loaded_textures;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
+    std::map<std::string, Texture*> loaded_textures;	// stores all the textures loaded so far
     std::map<unsigned int, Material*> loaded_materials;
     std::vector<Mesh> meshes;
     std::string directory;

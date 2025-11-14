@@ -1,6 +1,8 @@
 #pragma once
 #include "bloom.h"
 
+#include "../Editor/camera.h"
+
 #include <mutex>
 #include <vector>
 #include <unordered_map>
@@ -13,7 +15,6 @@
 #include <glm/gtx/hash.hpp>
 #include <chrono>
 
-class Camera;
 class Shader;
 class BaseModel;
 class UserInterface;

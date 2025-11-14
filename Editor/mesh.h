@@ -27,7 +27,7 @@ enum TextureType {
     TexAlbedo, TexNormal, TexMetalness, TexRoughness, TexEmission, TexAmbientOcclusion, TexSpecular, TexLast
 };
 
-struct Texture {
+class Texture {
 public:
     unsigned int id;
     std::set<TextureType> types;
@@ -102,7 +102,8 @@ enum FileFormat {
     Default, glTF, FBX
 };
 
-struct Material {
+class Material {
+public:
     std::string name;
     std::map<TextureType, Texture*> textures;
     FileFormat format;
@@ -253,4 +254,4 @@ private:
 
         glBindVertexArray(0);
     }
-}; #pragma once
+};

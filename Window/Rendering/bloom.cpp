@@ -1,6 +1,6 @@
 #include "bloom.h"
 
-#include "opengl_utils.h"
+#include "../Utility/opengl_utils.h"
 #include "shader.h"
 
 #include <iostream>
@@ -22,7 +22,10 @@ unsigned int initialize_bloom(int num_bloom_textures, std::vector<TextureAndSize
         glGenTextures(1, &mip.texture_id);
         glBindTexture(GL_TEXTURE_2D, mip.texture_id);
         // we are downscaling an HDR color buffer, so we need a float texture format
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, mip.size.x, mip.size.y, 0, GL_RGBA, GL_FLOAT, nullptr);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F,
+            static_cast<GLsizei>(mip.size.x),
+            static_cast<GLsizei>(mip.size.y),
+            0, GL_RGBA, GL_FLOAT, nullptr);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -55,9 +58,9 @@ void bloom_downsampling(Shader* shader, unsigned int starting_texture_id, std::v
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
     // Progressively downsample through the mip chain
-    for (int i = 0; i < bloom_textures.size(); i++) {
+    for (size_t i = 0; i < bloom_textures.size(); ++i) {
         const TextureAndSize& mip = bloom_textures[i];
-        glViewport(0, 0, mip.size.x, mip.size.y);
+        glViewport(0, 0, static_cast<GLsizei>(mip.size.x), static_cast<GLsizei>(mip.size.y));
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, mip.texture_id, 0);
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -87,15 +90,15 @@ void bloom_upsampling(Shader* shader, std::vector<TextureAndSize>& bloom_texture
 
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-    for (int i = bloom_textures.size() - 1; i > 0; i--) {
-        const TextureAndSize& mip = bloom_textures[i];
-        const TextureAndSize& nextMip = bloom_textures[i - 1];
+    for (int i = static_cast<int>(bloom_textures.size()) - 1; i > 0; --i) {
+        const TextureAndSize& mip = bloom_textures[static_cast<size_t>(i)];
+        const TextureAndSize& nextMip = bloom_textures[static_cast<size_t>(i - 1)];
 
         // Bind viewport and texture from where to read
         glBindTexture(GL_TEXTURE_2D, mip.texture_id);
 
         // Set framebuffer render target (we write to this texture)
-        glViewport(0, 0, nextMip.size.x, nextMip.size.y);
+        glViewport(0, 0, static_cast<GLsizei>(nextMip.size.x), static_cast<GLsizei>(nextMip.size.y));
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, nextMip.texture_id, 0);
         glClear(GL_COLOR_BUFFER_BIT);
 
