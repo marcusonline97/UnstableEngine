@@ -106,13 +106,18 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\assimp;C:\GameEngine\GameEngineCourse\UnstableEngine\Window;C:\GameEngine\GameEngineCourse\UnstableEngine\ueSTL;C:\GameEngine\GameEngineCourse\UnstableEngine\Editor;C:\GameEngine\GameEngineCourse\UnstableEngine\Engine;$(SolutionDir)\3rdParty\includes;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\glm;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\ImGui;$(SolutionDir)\3rdParty\includes\assimp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Dwmapi.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\libs\Release;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\libs\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /Y "$(ProjectDir)3rdParty\libs\Debug\assimp-vc143-mtd.dll" "$(TargetDir)assimp-vc143-mtd.dll"
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -124,16 +129,24 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\assimp;C:\GameEngine\GameEngineCourse\UnstableEngine\Window;C:\GameEngine\GameEngineCourse\UnstableEngine\ueSTL;C:\GameEngine\GameEngineCourse\UnstableEngine\Editor;C:\GameEngine\GameEngineCourse\UnstableEngine\Engine;$(SolutionDir)\3rdParty\includes;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\glm;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\includes\ImGui;$(SolutionDir)\3rdParty\includes\assimp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Dwmapi.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\libs\Release;C:\GameEngine\GameEngineCourse\UnstableEngine\3rdParty\libs\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /Y "$(ProjectDir)3rdParty\libs\Release\assimp-vc143-mt.dll" "$(TargetDir)assimp-vc143-mt.dll"
+
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="3rdParty\includes\assimp\config.h" />
+    <ClInclude Include="3rdParty\includes\assimp\Importer.hpp" />
+    <ClInclude Include="3rdParty\includes\assimp\include\assimp\Importer.hpp" />
     <ClInclude Include="3rdParty\includes\EA_STL\EASTL\algorithm.h" />
     <ClInclude Include="3rdParty\includes\EA_STL\EASTL\allocator.h" />
     <ClInclude Include="3rdParty\includes\EA_STL\EASTL\bonus\compressed_pair.h" />
@@ -492,7 +505,9 @@
     <ClInclude Include="Window\WindowInit.h" />
   </ItemGroup>
   <ItemGroup>
+    <Library Include="3rdParty\libs\Debug\assimp-vc143-mtd.lib" />
     <Library Include="3rdParty\libs\glfw3.lib" />
+    <Library Include="3rdParty\libs\Release\assimp-vc143-mt.lib" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Users\mjper\source\repos\SamsaraEngine\glad.c" />
@@ -525,6 +540,7 @@
     <ClCompile Include="Window\WindowInit.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\APIs\assimp\build\bin\Release\assimp-vc143-mt.dll" />
     <None Include="3rdParty\includes\glm\detail\func_common.inl" />
     <None Include="3rdParty\includes\glm\detail\func_common_simd.inl" />
     <None Include="3rdParty\includes\glm\detail\func_exponential.inl" />
@@ -665,6 +681,8 @@
     <None Include="3rdParty\includes\glm\gtx\vector_angle.inl" />
     <None Include="3rdParty\includes\glm\gtx\vector_query.inl" />
     <None Include="3rdParty\includes\glm\gtx\wrap.inl" />
+    <None Include="x64\Debug\assimp-vc143-mtd.dll" />
+    <None Include="x64\Release\assimp-vc143-mt.dll" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="EditorResources\Images\ue_icon.jpg" />

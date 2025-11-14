@@ -19,13 +19,19 @@
 #include <filesystem>
 
 // Conversion helpers
-inline glm::vec3 toGlm(const aiVector3D& v) {
-    return glm::vec3(v.x, v.y, v.z);
+inline aiVector3D toAi(const glm::vec3& v) {
+    return aiVector3D(static_cast<ai_real>(v.x),
+        static_cast<ai_real>(v.y),
+        static_cast<ai_real>(v.z));
+}
+inline aiQuaternion toAi(const glm::quat& q) {
+    return aiQuaternion(static_cast<ai_real>(q.w),
+        static_cast<ai_real>(q.x),
+        static_cast<ai_real>(q.y),
+        static_cast<ai_real>(q.z));
 }
 
-inline glm::quat toGlm(const aiQuaternion& q) {
-    return glm::quat(q.w, q.x, q.y, q.z);
-}
+
 
 // constructor, expects a filepath to a 3D model.
 Model::Model(const std::string& name, std::string const& path, bool gamma, bool set_flip_vertically) : gammaCorrection(gamma)
@@ -145,7 +151,7 @@ void Model::calculate_interpolated_transformation(aiVector3D& transformation, fl
     const aiVector3D& start = it_transformation->second;
     const aiVector3D& end = it_next_transformation->second;
     aiVector3D delta = end - start;
-    transformation = start + factor * delta;
+    transformation = start + static_cast<ai_real>(factor) * delta;
 }
 
 // For rotations
@@ -273,34 +279,34 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
         Vertex vertex;
         glm::vec3 vector; // placeholder for assimp -> glm conversion
         // positions
-        vector.x = mesh->mVertices[i].x;
-        vector.y = mesh->mVertices[i].y;
-        vector.z = mesh->mVertices[i].z;
+        vector.x = static_cast<float>(mesh->mVertices[i].x);
+        vector.y = static_cast<float>(mesh->mVertices[i].y);
+        vector.z = static_cast<float>(mesh->mVertices[i].z);
         vertex.Position = vector;
         // normals
         if (mesh->HasNormals())
         {
-            vector.x = mesh->mNormals[i].x;
-            vector.y = mesh->mNormals[i].y;
-            vector.z = mesh->mNormals[i].z;
+            vector.x = static_cast<float>(mesh->mNormals[i].x);
+            vector.y = static_cast<float>(mesh->mNormals[i].y);
+            vector.z = static_cast<float>(mesh->mNormals[i].z);
             vertex.Normal = vector;
         }
         // texture coordinates
         if (mesh->mTextureCoords[0]) // does the mesh contain texture coordinates?
         {
             glm::vec2 vec;
-            vec.x = mesh->mTextureCoords[0][i].x;
-            vec.y = mesh->mTextureCoords[0][i].y;
+            vec.x = static_cast<float>(mesh->mTextureCoords[0][i].x);
+            vec.y = static_cast<float>(mesh->mTextureCoords[0][i].y);
             vertex.TexCoords = vec;
             // tangent
-            vector.x = mesh->mTangents[i].x;
-            vector.y = mesh->mTangents[i].y;
-            vector.z = mesh->mTangents[i].z;
+            vector.x = static_cast<float>(mesh->mTangents[i].x);
+            vector.y = static_cast<float>(mesh->mTangents[i].y);
+            vector.z = static_cast<float>(mesh->mTangents[i].z);
             vertex.Tangent = vector;
             // bitangent
-            vector.x = mesh->mBitangents[i].x;
-            vector.y = mesh->mBitangents[i].y;
-            vector.z = mesh->mBitangents[i].z;
+            vector.x = static_cast<float>(mesh->mBitangents[i].x);
+            vector.y = static_cast<float>(mesh->mBitangents[i].y);
+            vector.z = static_cast<float>(mesh->mBitangents[i].z);
             vertex.Bitangent = vector;
         }
         else
@@ -396,8 +402,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 
         for (unsigned int j = 0; j < mesh->mBones[i]->mNumWeights; ++j) {
             unsigned int vertex_id = mesh->mBones[i]->mWeights[j].mVertexId;
-            float weight = mesh->mBones[i]->mWeights[j].mWeight;
-
+float weight = static_cast<float>(mesh->mBones[i]->mWeights[j].mWeight);
             if (weight == 0.0f) {
                 continue;
             }

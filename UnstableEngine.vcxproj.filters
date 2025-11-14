@@ -1104,9 +1104,17 @@
     <ClInclude Include="Component\sphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="3rdParty\includes\assimp\include\assimp\Importer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdParty\includes\assimp\Importer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="3rdParty\libs\glfw3.lib" />
+    <Library Include="3rdParty\libs\Debug\assimp-vc143-mtd.lib" />
+    <Library Include="3rdParty\libs\Release\assimp-vc143-mt.lib" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Users\mjper\source\repos\SamsaraEngine\glad.c">
@@ -1615,6 +1623,9 @@
     <None Include="3rdParty\includes\glm\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="..\..\..\APIs\assimp\build\bin\Release\assimp-vc143-mt.dll" />
+    <None Include="x64\Debug\assimp-vc143-mtd.dll" />
+    <None Include="x64\Release\assimp-vc143-mt.dll" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="EditorResources\Images\ue_icon.jpg">
